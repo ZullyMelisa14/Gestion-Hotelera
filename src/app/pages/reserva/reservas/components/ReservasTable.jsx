@@ -1,10 +1,11 @@
 import useReserva from "./useReserva";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../styles/ReservasTable.css";
 import { getReservas } from "@/utils/peticiones";
 
 export default function ReservasTable({ reservas }) {
   const { setReservas, handleEstadoReserva, handleCancelarReserva } = useReserva();
+  const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
 
   useEffect(() => {
     getReservas(setReservas);
@@ -42,6 +43,24 @@ export default function ReservasTable({ reservas }) {
           ))}
         </tbody>
       </table>
+
+      {/* Modal de detalles */}
+      {reservaSeleccionada && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Detalles de la Reserva</h2>
+            <p><b>Nombre:</b> {reservaSeleccionada.nombre} {reservaSeleccionada.apellido}</p>
+            <p><b>Teléfono:</b> {reservaSeleccionada.telefono}</p>
+            <p><b>Correo:</b> {reservaSeleccionada.correo}</p>
+            <p><b>Tipo Documento:</b> {reservaSeleccionada.tipoDocumento}</p>
+            <p><b>Número Documento:</b> {reservaSeleccionada.numeroDocumento}</p>
+            <p><b>Método de Pago:</b> {reservaSeleccionada.metodoPago}</p>
+            <p><b>Pago:</b> {reservaSeleccionada.pago}</p>
+            <p><b>Total:</b> {reservaSeleccionada.total}</p>
+            <button onClick={() => setReservaSeleccionada(null)}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
