@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏨 Gestión Hotelera
 
-## Getting Started
+Sistema web para la gestión integral de un hotel, desarrollado con **React/Next.js** y **Firebase**.
 
-First, run the development server:
+---
+
+## 🚀 Funcionalidades principales
+
+- **Gestión de empleados:**  
+  Alta, edición, listado y control de empleados del hotel.
+
+- **Gestión de habitaciones:**  
+  Registro, edición y visualización de habitaciones disponibles y ocupadas.
+
+- **Reservas:**  
+  Creación y seguimiento de reservas de habitaciones.
+
+- **Cocina:**  
+  Gestión de pedidos de cocina, cambio de estado, detalle y filtrado de pedidos.
+
+- **Autenticación:**  
+  Login y registro de usuarios con Firebase Auth.
+
+---
+
+## 🗂️ Estructura de carpetas relevante
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+app
+├── api
+│   ├── auth
+│   │   ├── [...nextauth]
+│   │   └── route.js
+│   ├── empleados
+│   │   ├── route.js
+│   │   └── [...slug]
+│   ├── habitaciones
+│   │   ├── route.js
+│   │   └── [...slug]
+│   └── reservas
+│       ├── route.js
+│       └── [...slug]
+├── components
+│   ├── Auth
+│   │   ├── LoginForm.jsx
+│   │   └── RegisterForm.jsx
+│   ├── Dashboard
+│   │   ├── Empleados.jsx
+│   │   ├── Habitaciones.jsx
+│   │   └── Reservas.jsx
+│   ├── Layout
+│   │   ├── Navbar.jsx
+│   │   └── Sidebar.jsx
+│   └── UI
+│       ├── Button.jsx
+│       ├── Modal.jsx
+│       └── Table.jsx
+├── context
+│   ├── AuthContext.js
+│   ├── EmpleadoContext.js
+│   ├── HabitacionContext.js
+│   └── ReservaContext.js
+├── hooks
+│   ├── useAuth.js
+│   ├── useEmpleados.js
+│   ├── useHabitaciones.js
+│   └── useReservas.js
+├── middleware
+│   └── authMiddleware.js
+├── pages
+│   ├── api
+│   │   ├── auth
+│   │   │   ├── [...nextauth].js
+│   │   │   └── route.js
+│   │   ├── empleados
+│   │   │   ├── route.js
+│   │   │   └── [...slug].js
+│   │   ├── habitaciones
+│   │   │   ├── route.js
+│   │   │   └── [...slug].js
+│   │   └── reservas
+│   │       ├── route.js
+│   │       └── [...slug].js
+│   ├── _app.js
+│   ├── _document.js
+│   ├── index.js
+│   ├── login.js
+│   ├── register.js
+│   ├── dashboard
+│   │   ├── empleados.js
+│   │   ├── habitaciones.js
+│   │   └── reservas.js
+│   └──404.js
+├── postcss.config.js
+├── prisma
+│   ├── migrations
+│   ├── schema.prisma
+│   └── seed.js
+├── public
+│   ├── images
+│   └── favicon.ico
+├── styles
+│   ├── globals.css
+│   └── Home.module.css
+├── tailwind.config.js
+└── utils
+    ├── api.js
+    ├── auth.js
+    ├── empleados.js
+    ├── habitaciones.js
+    └── reservas.js
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📚 Recursos adicionales
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Documentación de Next.js:**  
+  Aprende sobre las características y la API de Next.js.
 
-## Learn More
+- **Tutorial interactivo de Next.js:**  
+  Un curso práctico para aprender Next.js.
 
-To learn more about Next.js, take a look at the following resources:
+- **Repositorio de Next.js en GitHub:**  
+  Tu retroalimentación y contribuciones son bienvenidas.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Despliegue en Vercel
 
-## Deploy on Vercel
+La forma más sencilla de desplegar tu aplicación Next.js es usar la [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Consulta nuestra [documentación de despliegue de Next.js](https://nextjs.org/docs/app/building-your-application/deploying) para más detalles.
