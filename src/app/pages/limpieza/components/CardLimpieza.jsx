@@ -1,45 +1,53 @@
 'use client';
-import CardContent from "@/app/components/Cards/GlobalCard";
 import { useState } from "react";
+import { actualizarEstadoLimpiezaHabitacion } from "@/utils/peticiones";
+import CardContent from "@/app/components/Cards/GlobalCard";
 import '../styles/Limpieza.css';
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/utils/firebaseConfig";
 
 const CardLimpieza = ({ habitacion }) => {
-    const [cleanState, setCleanState] = useState(habitacion.estado_limpieza || 'sucio '); // 'sucio', 'en limpieza', 'limpio'
-    const [cleaning, setCleaning] = useState(false); // Para controlar el estado de "En limpieza"
+    // Si no existe el campo, asume "sucio"
+    const [cleanState, setCleanState] = useState(habitacion.estado_limpieza || 'sucio ');
+    const [cleaning, setCleaning] = useState(false);
 
-    const iniciarLimpieza = () => {
-        // Solo permitir iniciar la limpieza si está sucia
+    const iniciarLimpieza = async () => {
         if (cleanState === 'sucio ') {
-            setCleanState('en limpieza'); // Cambiar a "En limpieza"
+            setCleanState('en limpieza');
             setCleaning(true);
+            // Esto creará el campo si no existe
+            await actualizarEstadoLimpiezaHabitacion(habitacion.id, 'en limpieza');
         }
     };
 
-    const terminarLimpieza = () => {
-        // Permitir al usuario terminar la limpieza manualmente
+    const terminarLimpieza = async () => {
         if (cleanState === 'en limpieza') {
-            setCleanState('limpio '); // Cambiar a "Limpio"
+            setCleanState('limpio ');
             setCleaning(false);
+            await actualizarEstadoLimpiezaHabitacion(habitacion.id, 'limpio ');
+            await marcarDisponible(habitacion.id);
         }
+    };
+
+    const marcarDisponible = async (id) => {
+        const docRef = doc(db, "habitaciones", id);
+        await updateDoc(docRef, { estado: "disponible" });
     };
 
     return (
         <>
             <CardContent habitacion={habitacion}>
                 <div className="card-status">
-                    {/* Mostrar el estado de la habitación: sucia, en limpieza o limpia */}
                     <span className="status-text">
                         {cleanState === 'sucio ' && 'SUCIA'}
                         {cleanState === 'en limpieza' && 'EN LIMPIEZA'}
                         {cleanState === 'limpio ' && 'LIMPIA'}
                     </span>
-                    {/* Mostrar el ícono dependiendo del estado */}
                     <span>
                         {cleanState === 'sucio ' && '💔'}
                         {cleanState === 'en limpieza' && '🛠️'}
                         {cleanState === 'limpio ' && '💚'}
                     </span>
-                    {/* Botón para iniciar la limpieza si está sucia */}
                     {cleanState === 'sucio ' && (
                         <button
                             className="cleanButton"
@@ -49,7 +57,6 @@ const CardLimpieza = ({ habitacion }) => {
                         Limpiar
                         </button>
                     )}
-                    {/* Botón para terminar la limpieza manualmente si está en proceso */}
                     {cleanState === 'en limpieza' && (
                         <button className="cleanButton" onClick={terminarLimpieza}>
                             Finalizar

@@ -1,5 +1,5 @@
 import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, getDocs, addDoc, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, addDoc, onSnapshot, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "./firebaseConfig";
 
 // LOGIN
@@ -40,16 +40,9 @@ export async function getEmpleados(setEmpleados) {
 }
 
 // OBTENER RESERVAS DESDE FIRESTORE
-export async function getReservas(setReservas) {
-  try {
-    const reservasCol = collection(db, "reservas");
-    const reservasSnapshot = await getDocs(reservasCol);
-    const reservasList = reservasSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setReservas(reservasList);
-  } catch (error) {
-    console.error(error);
-    setReservas([]);
-  }
+export async function getReservas() {
+  const snapshot = await getDocs(collection(db, "reservas"));
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
 // REGISTRO DE USUARIO
@@ -110,6 +103,12 @@ export async function peticionGet(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Error en la petición");
   return await res.json();
+}
+
+// Actualizar estado de limpieza de habitación
+export async function actualizarEstadoLimpiezaHabitacion(id, nuevoEstado) {
+  const docRef = doc(db, "habitaciones", id);
+  await updateDoc(docRef, { estado_limpieza: nuevoEstado });
 }
 
 

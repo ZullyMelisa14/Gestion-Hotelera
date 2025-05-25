@@ -1,12 +1,23 @@
+"use client";
+import { useState, useEffect } from "react";
 import Cards from "./components/cardMain";
-import { peticionGet } from "@/utils/peticiones";
-export default async function Limpieza() {
-  const habitaciones = await peticionGet(
-    "http://localhost:3000/api/habitaciones"
-  );
+import CardLimpieza from "./components/CardLimpieza"; // <-- AGREGA ESTA LÍNEA
+import { getHabitaciones } from "@/utils/peticiones";
+
+export default function Limpieza() {
+  const [habitaciones, setHabitaciones] = useState([]);
+
+  useEffect(() => {
+    getHabitaciones().then(setHabitaciones);
+  }, []);
+
   return (
     <>
-      <Cards habitaciones={habitaciones} />
+      {habitaciones
+        .filter((h) => h.estado === "limpieza")
+        .map((habitacion) => (
+          <CardLimpieza key={habitacion.id} habitacion={habitacion} />
+        ))}
     </>
   );
 }

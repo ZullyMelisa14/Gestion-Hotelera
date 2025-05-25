@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getReservas } from "@/utils/peticiones";
+
 export default function useReserva() {
   const [reservas, setReservas] = useState([]);
+
+  useEffect(() => {
+    getReservas().then(setReservas);
+  }, []);
 
   const actualizarReserva = (reservaActualizada) => {
     setReservas(
@@ -24,11 +30,13 @@ export default function useReserva() {
     const check = document.getElementById(pago);
     const canceladoInfo = document.getElementById(cancelado);
 
-    if (element.style.backgroundColor !== "grey") {
-      element.style.backgroundColor = "grey";
-      icon.className = "none";
-      check.style.display = "none";
-      canceladoInfo.style.display = "block";
+    if (element && icon && check && canceladoInfo) {
+      if (element.style.backgroundColor !== "grey") {
+        element.style.backgroundColor = "grey";
+        icon.className = "none";
+        check.style.display = "none";
+        canceladoInfo.style.display = "block";
+      }
     }
   };
 

@@ -3,9 +3,8 @@ import { useEffect } from "react";
 import "../styles/ReservasTable.css";
 import { getReservas } from "@/utils/peticiones";
 
-const ReservasTable = () => {
-  const { reservas, setReservas, handleEstadoReserva, handleCancelarReserva } =
-    useReserva();
+export default function ReservasTable({ reservas }) {
+  const { setReservas, handleEstadoReserva, handleCancelarReserva } = useReserva();
 
   useEffect(() => {
     getReservas(setReservas);
@@ -17,11 +16,13 @@ const ReservasTable = () => {
         <thead>
           <tr>
             <th>Código</th>
-            <th>Identificación</th>
-            <th>Nombre</th>
-            <th>Fecha llegada / salida</th>
-            <th>Habitacion</th>
+            <th>Habitación</th>
+            <th>Piso</th>
+            <th>Huésped</th>
+            <th>Fecha Llegada</th>
+            <th>Fecha Salida</th>
             <th>Pago</th>
+            <th>Identificación</th>
             <th>Estado</th>
           </tr>
         </thead>
@@ -29,43 +30,14 @@ const ReservasTable = () => {
           {reservas.map((reserva) => (
             <tr key={reserva.codigo} id={reserva.codigo}>
               <td>{reserva.codigo}</td>
-              <td>{reserva.identificacion}</td>
+              <td>{reserva.numero_habitacion}</td>
+              <td>{reserva.piso}</td>
               <td>{reserva.nombre}</td>
-              <td>
-                {reserva.fechallegada.split("T")[0]} /{" "}
-                {reserva.fechasalida.split("T")[0]}
-              </td>
-              <td>{`# ${reserva.numero_habitacion} - piso ${reserva.piso}`}</td>
+              <td>{reserva.fechallegada ? reserva.fechallegada.split("T")[0] : ""}</td>
+              <td>{reserva.fechasalida ? reserva.fechasalida.split("T")[0] : ""}</td>
               <td>{reserva.pago}</td>
-              <td>
-                <div className="icons-estado">
-                  <input
-                    id={reserva.pago}
-                    type="checkbox"
-                    checked={reserva.estado === "En hospedaje"}
-                    onChange={() => handleEstadoReserva(reserva)}
-                  />
-                  <div
-                    id={reserva.identificacion}
-                    className="button-cancel"
-                    onClick={() =>
-                      handleCancelarReserva(
-                        reserva.codigo,
-                        reserva.identificacion,
-                        reserva.pago,
-                        reserva.numero_habitacion
-                      )
-                    }
-                  >
-                    <h4
-                      id={reserva.numero_habitacion}
-                      className="canceladoInfo"
-                    >
-                      Cancelado
-                    </h4>
-                  </div>
-                </div>
-              </td>
+              <td>{reserva.identificacion}</td>
+              <td>{reserva.estado}</td>
             </tr>
           ))}
         </tbody>
@@ -73,5 +45,3 @@ const ReservasTable = () => {
     </div>
   );
 };
-
-export default ReservasTable;
