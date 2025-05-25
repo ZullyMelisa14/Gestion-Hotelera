@@ -1,0 +1,12 @@
+.grid-wrapper {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+  
+  /* Ajustes específicos para dispositivos pequeños */
+  @media (max-width: 768px) {
+    .grid-wrapper {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+  }
