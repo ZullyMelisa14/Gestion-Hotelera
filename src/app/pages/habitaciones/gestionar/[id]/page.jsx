@@ -50,12 +50,19 @@ export default function GestionarHabitacion() {
 
   useEffect(() => {
     const fetchReservas = async () => {
-      const q = query(collection(db, "reservas"), where("habitacionId", "==", id));
+      // Cambia aquí el campo si tu modelo lo requiere
+      const q = query(collection(db, "reservas"), where("id_habitacion", "==", id));
       const qs = await getDocs(q);
       setReservas(qs.docs.map(doc => ({ id: doc.id, ...doc.data() })));
     };
     fetchReservas();
   }, [id]);
+
+  useEffect(() => {
+    if (habitacion?.estado) {
+      setEstado(habitacion.estado);
+    }
+  }, [habitacion]);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -158,15 +165,17 @@ export default function GestionarHabitacion() {
           width: 14, height: 14, borderRadius: "50%", display: "inline-block",
           background:
             estado === "disponible" ? "#43a047" :
-              estado === "ocupada" ? "#f9a825" :
-                estado === "limpieza" ? "#1976d2" : "#757575",
+            estado === "ocupada" ? "#f9a825" :
+            estado === "limpieza" ? "#1976d2" : "#757575",
           marginRight: 8
         }}></span>
-        <select value={estado} onChange={e => setEstado(e.target.value)} style={{ ...inputStyle, fontSize: 15 }}>
-          {ESTADOS.map(e => (
-            <option key={e} value={e}>{e.charAt(0).toUpperCase() + e.slice(1)}</option>
-          ))}
-        </select>
+        {estado && (
+          <select value={estado} onChange={e => setEstado(e.target.value)} style={{ ...inputStyle, fontSize: 15 }}>
+            {ESTADOS.map(e => (
+              <option key={e} value={e}>{e.charAt(0).toUpperCase() + e.slice(1)}</option>
+            ))}
+          </select>
+        )}
         <button onClick={handleGuardarEstado} style={{ ...btn("#0F4C75"), marginLeft: 10, borderRadius: 6, padding: "7px 18px" }}>
           Guardar
         </button>
@@ -214,7 +223,8 @@ export default function GestionarHabitacion() {
             background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.04)"
           }}>
             <p style={{ margin: 0 }}><strong>Huésped:</strong> {reserva.nombre} {reserva.apellido}</p>
-            <p style={{ margin: 0 }}><strong>Fechas:</strong> {reserva.fechaLlegada} - {reserva.fechaSalida}</p>
+            <p style={{ margin: 0 }}><strong>Documento:</strong> {reserva.numeroDocumento}</p>
+            <p style={{ margin: 0 }}><strong>Fechas:</strong> {reserva.fechaLlegada || reserva.fechallegada} - {reserva.fechaSalida || reserva.fechasalida}</p>
             <p style={{ margin: 0 }}><strong>Método de pago:</strong> {reserva.metodoPago}</p>
           </div>
         ))}
