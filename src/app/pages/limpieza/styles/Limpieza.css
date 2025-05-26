@@ -1,24 +1,47 @@
-.cleanButton {
-    background-color: #0f4c75;
-    color: white;
-    border: white 1px solid;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    cursor: pointer;
+.limpieza-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 32px 24px;
+  background: #f7fafd;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.titulo-limpieza {
+  text-align: center;
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 30px;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .grid-wrapper {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .grid-wrapper {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
-  
-  /* Ajustes específicos para dispositivos pequeños */
-  @media (max-width: 768px) {
-    .grid-wrapper {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-  }
+}
+
+/* Botón de limpiar */
+.cleanButton {
+  background-color: #0f4c75;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cleanButton:hover {
+  background-color: #1b6ca8;
+}

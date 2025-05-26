@@ -1,13 +1,13 @@
-import { verify } from "jsonwebtoken";
-import { cookies } from "next/headers";
-
-export default function getCookie(nameCookie) {
-  const cookieStore = cookies();
-  const auth_token = cookieStore.get(nameCookie).value;
-  if (!auth_token) {
-    console.log("no existe el token");
+export default function getCookie(name) {
+  if (typeof document === "undefined") return {};
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    try {
+      return JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));
+    } catch {
+      return {};
+    }
   }
-
-  const data = verify(auth_token, "secret");
-  return data;
+  return {};
 }

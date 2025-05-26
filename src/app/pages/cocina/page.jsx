@@ -6,16 +6,14 @@ import ModalPedido from "./components/ModalPedido";
 import AgregarPedido from "./components/AgregarPedido";
 import "./styles/CocinaPage.css";
 
-
-export default function CocinaPage() {
-  const [modalOpen, setModalOpen] = useState(false);
+function CocinaPage() {
+  const [modalOpen, setModalOpen] = useState(false); 
   const [modalAgregar, setModalAgregar] = useState(false);
 
   return (
     <ContextCocinaProvider>
       <PedidosTable onShowDetalle={() => setModalOpen(true)} />
       <ModalPedido isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-      {/* Modal para agregar pedido */}
       {modalAgregar && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -24,7 +22,6 @@ export default function CocinaPage() {
           </div>
         </div>
       )}
-      {/* Botón flotante */}
       <button
         className="fab"
         title="Agregar pedido"
@@ -35,3 +32,7 @@ export default function CocinaPage() {
     </ContextCocinaProvider>
   );
 }
+
+export default CocinaPage;
+
+
