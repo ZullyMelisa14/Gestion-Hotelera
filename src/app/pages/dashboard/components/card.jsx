@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import HabitacionModal from "./Modal";
 import CardContent from "/src/app/components/Cards/GlobalCard";

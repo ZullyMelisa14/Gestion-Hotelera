@@ -8,36 +8,27 @@ export default function useReserva() {
     getReservas().then(setReservas);
   }, []);
 
-  const actualizarReserva = (reservaActualizada) => {
-    setReservas(
-      reservas.map((r) =>
-        r.codigo === reservaActualizada.codigo ? reservaActualizada : r
+  // Actualiza el estado de una reserva (En espera <-> En hospedaje)
+  const handleEstadoReserva = (codigo) => {
+    setReservas((prev) =>
+      prev.map((r) =>
+        r.codigo === codigo
+          ? {
+              ...r,
+              estado: r.estado === "En espera" ? "En hospedaje" : "En espera",
+            }
+          : r
       )
     );
   };
 
-  const handleEstadoReserva = (reserva) => {
-    const nuevaReserva = {
-      ...reserva,
-      estado: reserva.estado === "En espera" ? "En hospedaje" : "En espera",
-    };
-    actualizarReserva(nuevaReserva);
-  };
-
-  const handleCancelarReserva = (codigo, identificacion, pago, cancelado) => {
-    const element = document.getElementById(codigo);
-    const icon = document.getElementById(identificacion);
-    const check = document.getElementById(pago);
-    const canceladoInfo = document.getElementById(cancelado);
-
-    if (element && icon && check && canceladoInfo) {
-      if (element.style.backgroundColor !== "grey") {
-        element.style.backgroundColor = "grey";
-        icon.className = "none";
-        check.style.display = "none";
-        canceladoInfo.style.display = "block";
-      }
-    }
+  // Marca una reserva como cancelada (cambia el estado a "Cancelada")
+  const handleCancelarReserva = (codigo) => {
+    setReservas((prev) =>
+      prev.map((r) =>
+        r.codigo === codigo ? { ...r, estado: "Cancelada" } : r
+      )
+    );
   };
 
   return {

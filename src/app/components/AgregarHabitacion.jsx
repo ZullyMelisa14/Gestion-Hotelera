@@ -2,6 +2,17 @@
 import { useState } from "react";
 import { agregarHabitacion } from "@/utils/peticiones";
 
+const TIPOS = [
+  "Habitación individual",
+  "Habitación doble estándar (una cama doble)",
+  "Habitación doble estándar (dos camas separadas)",
+  "Habitación doble deluxe",
+  "Estudio o apartamento",
+  "Suite júnior",
+  "Suite ejecutiva",
+  "Suite presidencial",
+];
+
 export default function AgregarHabitacion({ onHabitacionAgregada }) {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [form, setForm] = useState({
@@ -9,6 +20,10 @@ export default function AgregarHabitacion({ onHabitacionAgregada }) {
     tipo: "",
     precio: "",
     capacidad: "",
+    piso: "",
+    servicios: "",
+    estrellas: "",
+    estado: "",
   });
   const [error, setError] = useState(null);
 
@@ -25,12 +40,22 @@ export default function AgregarHabitacion({ onHabitacionAgregada }) {
         tipo: form.tipo,
         precio: Number(form.precio),
         capacidad: Number(form.capacidad),
+        piso: Number(form.piso),
+        servicios: form.servicios
+          ? form.servicios.split(",").map((s) => s.trim()).filter(Boolean)
+          : [],
+        estrellas: Number(form.estrellas),
+        estado: form.estado,
       });
       setForm({
         numero: "",
         tipo: "",
         precio: "",
         capacidad: "",
+        piso: "",
+        servicios: "",
+        estrellas: "",
+        estado: "",
       });
       setMostrarFormulario(false);
       if (onHabitacionAgregada) onHabitacionAgregada();
@@ -96,15 +121,23 @@ export default function AgregarHabitacion({ onHabitacionAgregada }) {
               required
               style={inputStyle}
             />
-            <input
-              type="text"
-              name="tipo"
-              value={form.tipo}
-              onChange={handleChange}
-              placeholder="Tipo"
-              required
-              style={inputStyle}
-            />
+            <div>
+              <label></label>
+              <select
+                name="tipo"
+                value={form.tipo}
+                onChange={handleChange}
+                required
+                style={inputStyle}
+              >
+                <option value="">Seleccione tipo...</option>
+                {TIPOS.map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {tipo}
+                  </option>
+                ))}
+              </select>
+            </div>
             <input
               type="number"
               name="precio"
@@ -123,6 +156,47 @@ export default function AgregarHabitacion({ onHabitacionAgregada }) {
               required
               style={inputStyle}
             />
+            <input
+              name="piso"
+              type="number"
+              placeholder="Piso"
+              value={form.piso}
+              onChange={handleChange}
+              required
+              style={inputStyle}
+            />
+            <input
+              type="text"
+              name="servicios"
+              value={form.servicios}
+              onChange={handleChange}
+              placeholder="Servicios (separados por coma: WiFi, TV, Aire)"
+              style={inputStyle}
+            />
+            <input
+              type="number"
+              name="estrellas"
+              value={form.estrellas}
+              onChange={handleChange}
+              placeholder="Estrellas (1-5)"
+              min={1}
+              max={5}
+              required
+              style={inputStyle}
+            />
+            <select
+              name="estado"
+              value={form.estado}
+              onChange={handleChange}
+              required
+              style={inputStyle}
+            >
+              <option value="">Seleccione estado</option>
+              <option value="Disponible">Disponible</option>
+              <option value="Ocupada">Ocupada</option>
+              <option value="Limpieza">Limpieza</option>
+              <option value="Mantenimiento">Mantenimiento</option>
+            </select>
             {error && (
               <p style={{ color: "red", marginBottom: 10 }}>{error}</p>
             )}

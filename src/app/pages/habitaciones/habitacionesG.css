@@ -1,0 +1,86 @@
+.container {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 24px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+h2 {
+  margin-top: 30px;
+  color: #444;
+  font-size: 22px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.estado-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.estado-indicador {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0059c1;
+}
+
+img {
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 8px;
+}
+
+.reserva-card {
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+.mensaje {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.mensaje.exito {
+  color: green;
+}
+
+.mensaje.error {
+  color: red;
+}
+
+.alerta {
+  color: orange;
+  font-weight: bold;
+  margin-top: 10px;
+}

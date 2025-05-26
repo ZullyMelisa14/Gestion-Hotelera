@@ -1,12 +1,78 @@
+.filters-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 20px;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+
+.select-filter {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.2s ease;
+}
+
+.select-filter:focus {
+  outline: none;
+  border-color: #0F4C75;
+}
+
+.select-filter {
+  min-width: 180px;
+  max-width: 220px;
+}
+
+
+.clear-filters-btn {
+  background-color: #0F4C75;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear-filters-btn:hover {
+  background-color: #4682B4;
+  transform: scale(1.05);
+}
+
+/* Grid de habitaciones ordenadas en filas de 4 */
 .grid-wrapper {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .grid-wrapper {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  /* Ajustes específicos para dispositivos pequeños */
-  @media (max-width: 768px) {
-    .grid-wrapper {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+}
+
+@media (max-width: 768px) {
+  .grid-wrapper {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (max-width: 480px) {
+  .grid-wrapper {
+    grid-template-columns: 1fr;
+  }
+}

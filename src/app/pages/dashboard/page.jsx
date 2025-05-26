@@ -1,15 +1,25 @@
-import { getHabitaciones } from "@/utils/peticiones";
+"use client";
+import { useEffect, useState } from "react";
+import { suscribirHabitaciones } from "@/utils/peticiones";
+import AgregarHabitacion from "@/app/components/AgregarHabitacion";
 import Cards from "./components/cardMain";
-import AgregarHabitacion from "@/app/components/AgregarHabitacion"; // <-- Agrega esta línea
 import "./styles/Habitaciones.css";
 
-export default async function Recepcionista() {
-  // Traer la lista de habitaciones desde Firestore
-  const habitaciones = await getHabitaciones();
+export default function Recepcionista() {
+  const [habitaciones, setHabitaciones] = useState([]);
+
+  useEffect(() => {
+    const unsuscribe = suscribirHabitaciones(setHabitaciones);
+    return () => unsuscribe();
+  }, []);
+
+  // Ordenar habitaciones por número ascendente
+  const habitacionesOrdenadas = [...habitaciones].sort((a, b) => a.numero - b.numero);
+
   return (
     <>
-      <Cards habitaciones={habitaciones} />
       <AgregarHabitacion />
+      <Cards habitaciones={habitacionesOrdenadas} />
     </>
   );
 }

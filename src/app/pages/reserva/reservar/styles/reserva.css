@@ -1,98 +1,144 @@
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .divReserva {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 40px;
+  background-color: #f2f2f2;
+  min-height: 100vh;
+  gap: 40px;
+}
+
+/* Contenedor de cada sección */
+.container,
+.containerMDP {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 30px 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Título */
+.title h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #0056b3;
+  padding-bottom: 10px;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
-.container {
-  margin: 50px 16%;
-  margin-right: 5px;
-  background-color: #ffffff;
-  width: 500px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-}
-
-.title {
-  margin-bottom: 40px;
-  font-size: 10px;
-  text-align: start;
-  margin-left: 50px;
-}
-
-.formularioDP {
-  display: flex;
-  align-items: start;
-  flex-direction: column;
-  margin-left: 50px;
-}
-
+/* Labels e inputs */
 label {
-  margin-bottom: 5px;
-  font-size: medium;
-  margin-right: 20px;
+  font-weight: 600;
+  color: #444;
 }
+
 .required {
-  color: #0056b3;
-  font-size: 1.2em;
+  color: red;
+  margin-left: 4px;
 }
 
 input,
 select {
-  margin-bottom: 15px;
-  padding: 10px;
+  width: 100%;
+  padding: 10px 14px;
   border: 1px solid #ccc;
-  border-radius: 25px;
-  width: 200px;
-  margin-left: 20px;
-}
-.buttonContainer {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-button {
-  padding: 10px;
-  background-color: #0056b3;
-  color: white;
-  border: none;
   border-radius: 10px;
-  cursor: pointer;
+  font-size: 16px;
+  margin-top: 6px;
+  transition: 0.2s ease-in-out;
 }
 
-.formulacioMDP {
-  display: flex;
-  margin-left: 5px;
-  margin-bottom: 100px;
+input:focus,
+select:focus {
+  border-color: #0056b3;
+  outline: none;
 }
-.containerMDP {
-  margin: 50px 0;
-  padding: 20px;
-  background-color: #ffffff;
-  width: 300px;
+
+/* Botones */
+button {
+  padding: 12px 20px;
+  border: none;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
-.containerMDP input {
-  margin-right: 10px;
-  width: 30px;
+
+button[type="submit"] {
+  background-color: #0056b3;
+  color: white;
 }
-h2 {
-  margin-top: 30px;
-  font-size: small;
-  margin-left: 10px;
+
+button[type="submit"]:hover {
+  background-color: #003d80;
 }
-hr {
-  margin-top: 30px;
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
-.containerMDP button {
-  padding: 15px;
-  margin-top: 20px;
-}
+
 .buttonCancelar {
-  background-color: red;
-  margin-bottom: 50px;
-  width: 300px;
+  background-color: #d9534f;
+  color: white;
+  width: 100%;
 }
-.buttonConfirmar {
-  width: 300px;
+
+.buttonCancelar:hover {
+  background-color: #c9302c;
+}
+
+.buttonConfirmar button {
+  width: 100%;
+  background-color: #28a745;
+  color: white;
+}
+
+.buttonConfirmar button:hover {
+  background-color: #218838;
+}
+
+/* Totales y resumen */
+.containerMDP h2 {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+/* Radio buttons */
+.containerMDP input[type="radio"] {
+  width: auto;
+  margin-right: 8px;
+}
+
+/* Mensaje de confirmación */
+p {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .divReserva {
+    flex-direction: column;
+    padding: 20px;
+  }
 }

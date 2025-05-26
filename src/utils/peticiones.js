@@ -80,14 +80,8 @@ export async function agregarHabitacion(habitacionData) {
 }
 
 // Agregar reserva a Firestore
-export async function agregarReserva(reservaData) {
-  try {
-    const docRef = await addDoc(collection(db, "reservas"), reservaData);
-    return { id: docRef.id, ...reservaData };
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error al agregar reserva");
-  }
+export async function agregarReserva(reserva) {
+  await addDoc(collection(db, "reservas"), reserva);
 }
 
 // Suscribir a cambios en habitaciones
@@ -109,6 +103,12 @@ export async function peticionGet(url) {
 export async function actualizarEstadoLimpiezaHabitacion(id, nuevoEstado) {
   const docRef = doc(db, "habitaciones", id);
   await updateDoc(docRef, { estado_limpieza: nuevoEstado });
+}
+
+// Actualizar estado de habitación
+export async function actualizarEstadoHabitacion(idHabitacion, nuevoEstado) {
+  const docRef = doc(db, "habitaciones", idHabitacion);
+  await updateDoc(docRef, { estado: nuevoEstado });
 }
 
 
