@@ -1,5 +1,5 @@
 import EmpleadosMain from "./components/usingContext";
 
-export default function Page() {
-  return <EmpleadosMain />;
+export default function EmpleadosPage(props) {
+  return <EmpleadosMain {...props} />;
 }

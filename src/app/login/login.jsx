@@ -3,12 +3,14 @@
 import { useState } from "react";
 import useLoginState from "@/utils/useLoginState";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const { data, handleData, handleSubmit } = useLoginState();
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const togglePassword = () => setShowPassword(!showPassword);
 
@@ -20,6 +22,9 @@ export default function Home() {
 
     if (result?.success) {
       toast.success("¡Bienvenido! Redirigiendo...");
+      setTimeout(() => {
+        router.push("/pages/dashboard");
+      }, 300);
     } else if (result?.error) {
       toast.error(result.error || "Error al iniciar sesión");
     }

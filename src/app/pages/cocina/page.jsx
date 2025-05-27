@@ -7,7 +7,7 @@ import AgregarPedido from "./components/AgregarPedido";
 import "./styles/CocinaPage.css";
 
 function CocinaPage() {
-  const [modalOpen, setModalOpen] = useState(false); 
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalAgregar, setModalAgregar] = useState(false);
 
   return (
@@ -33,6 +33,7 @@ function CocinaPage() {
   );
 }
 
+// Exporta directamente el componente, SIN ProtectedRoute
 export default CocinaPage;
 
 

@@ -9,12 +9,11 @@ import {
 export const ContextEmpleados = createContext();
 
 export const ContextEmpleadosProvider = ({ children }) => {
-  const [empleados, setEmpleados] = useState([]); //estado de todos los empleados
-  const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState(null); //estado por si se da click en un empleado
-  const [isOpen, setIsOpen] = useState(false); // estado del modal
-  const [edicion, setEdicion] = useState(false); // estado de edición
+  const [empleados, setEmpleados] = useState([]);
+  const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [edicion, setEdicion] = useState(false);
 
-  // Cargar empleados al iniciar
   useEffect(() => {
     cargarEmpleados();
   }, []);

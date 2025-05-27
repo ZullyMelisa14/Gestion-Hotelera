@@ -1,23 +1,40 @@
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, getDocs, addDoc, onSnapshot, doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "./firebaseConfig";
+"use client";
+import { collection, getDocs, query, where, onSnapshot, doc, updateDoc, addDoc } from "firebase/firestore";
+import { db } from "./firebaseConfig";
 
-// LOGIN
-export async function loginHandler({ email, password }, router) {
+export async function loginHandler({ email, password }) {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-    router.push("/pages/dashboard");
-    return { status: "ok" };
+    const empleadosRef = collection(db, "empleados");
+    const q = query(
+      empleadosRef,
+      where("usuario", "==", email),
+      where("contraseña", "==", password)
+    );
+    const querySnapshot = await getDocs(q);
+
+    console.log("Intentando login con:", email, password);
+    console.log("Empleados encontrados:", querySnapshot.docs.map(doc => doc.data()));
+
+    if (querySnapshot.empty) {
+      return { error: "Correo o contraseña incorrectos" };
+    }
+
+    const empleado = querySnapshot.docs[0].data();
+    const { nombre, rol } = empleado;
+
+    document.cookie = `auth_cookie=${encodeURIComponent(JSON.stringify({ nombre, rol }))}; path=/`;
+
+    return { success: true };
   } catch (error) {
-    console.error(error);
-    throw new Error("Error al iniciar la sesión");
+    return { error: "Error al iniciar sesión" };
   }
 }
 
-// LOGOUT
+// LOGOUT SOLO BORRA LA COOKIE Y REDIRIGE
 export async function logoutHandler(router) {
   try {
-    await signOut(auth);
+    // Borra la cookie
+    document.cookie = "auth_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     router.push("/");
     return { status: "ok" };
   } catch (error) {
@@ -43,17 +60,6 @@ export async function getEmpleados(setEmpleados) {
 export async function getReservas() {
   const snapshot = await getDocs(collection(db, "reservas"));
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-}
-
-// REGISTRO DE USUARIO
-export async function registerHandler({ email, password }) {
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-    return { status: "ok" };
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error al registrar usuario");
-  }
 }
 
 // Obtener habitaciones desde Firestore
@@ -92,7 +98,7 @@ export function suscribirHabitaciones(callback) {
   });
 }
 
-// Debe estar así:
+// Petición GET genérica
 export async function peticionGet(url) {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Error en la petición");

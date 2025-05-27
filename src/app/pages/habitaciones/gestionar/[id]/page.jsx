@@ -16,7 +16,8 @@ const btn = (bg) => ({
   padding: "8px 18px", fontWeight: "bold", cursor: "pointer"
 });
 
-export default function GestionarHabitacion() {
+// Mueve tu componente principal aquí, SIN export default
+function GestionarHabitacion() {
   const router = useRouter();
   const { id } = useParams();
   const [habitacion, setHabitacion] = useState(null);
@@ -50,7 +51,6 @@ export default function GestionarHabitacion() {
 
   useEffect(() => {
     const fetchReservas = async () => {
-      // Cambia aquí el campo si tu modelo lo requiere
       const q = query(collection(db, "reservas"), where("id_habitacion", "==", id));
       const qs = await getDocs(q);
       setReservas(qs.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -241,3 +241,6 @@ export default function GestionarHabitacion() {
     </div>
   );
 }
+
+// Exporta directamente el componente, SIN ProtectedRoute
+export default GestionarHabitacion;
